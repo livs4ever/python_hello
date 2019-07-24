@@ -23,8 +23,8 @@ if (choice>=1 and choice<=4):
     	print("Result = ", res);
     else:
     	res = num1 / num2;
-    	print("Result = ", res);
+    	print("Result = ", res)
 elif choice == 5:
-    exit();
+    exit()
 else:
-    print("Wrong input..!!");
+    print("Wrong input..!!")
