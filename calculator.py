@@ -1,228 +1,98 @@
-#
-# Copyright 2019 CoolJWB
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#    https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-
+# CODE IS FROM https://www.digitalocean.com/community/tutorials/how-to-make-a-simple-calculator-program-in-python-3
+# LICENSED Attribution-NonCommercial-ShareAlike
+# 4.0 International (CC BY NC-SA 4.0)
+# CODE IS NOT OWNED BY ME
+# Improved certain sections and added various other functions
 import math
-import re
+def mode():
+    mode = True
+    while mode == True:
+        try:
+            return {"1":1,"2":2}[input('''
+==========================
+MODE 1 - Default Calculator                 |
+MODE 2 - Conversion                          |
+===========================
+Type 1 or 2 ONLY
+Mode Number : ''')]
+        except (ValueError,TypeError,KeyError):
+            print("Please select only 1 or 2.")
 
-def calc(eq):
-    try:
-        x = eq.split()
-        res = ""
+        
+mode()
 
-        deg = x.count("deg")
-        for amount in range(deg):
-            for length in range(len(x)):
-                if x[length] == "deg":
-                    mem = math.degrees(float(x[length + 1]))
-                    substr = "deg " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
+def calculator():
 
-        log = x.count("log")
-        for amount in range(log):
-            for length in range(len(x)):
-                if x[length] == "log":
-                    mem = math.log10(float(x[length + 1]))
-                    substr = "log " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        atan = x.count("atan")
-        for amount in range(atan):
-            for length in range(len(x)):
-                if x[length] == "atan":
-                    mem = math.atan(float(x[length + 1]))
-                    substr = "atan " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        acos = x.count("acos")
-        for amount in range(acos):
-            for length in range(len(x)):
-                if x[length] == "acos":
-                    mem = math.acos(float(x[length + 1]))
-                    substr = "acos " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        asin = x.count("asin")
-        for amount in range(asin):
-            for length in range(len(x)):
-                if x[length] == "asin":
-                    mem = math.asin(float(x[length + 1]))
-                    substr = "asin " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        tan = x.count("tan")
-        for amount in range(tan):
-            for length in range(len(x)):
-                if x[length] == "tan":
-                    mem = math.tan(math.radians(float(x[length + 1])))
-                    substr = "tan " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        cos = x.count("cos")
-        for amount in range(cos):
-            for length in range(len(x)):
-                if x[length] == "cos":
-                    mem = math.cos(math.radians(float(x[length + 1])))
-                    substr = "cos " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        sin = x.count("sin")
-        for amount in range(sin):
-            for length in range(len(x)):
-                if x[length] == "sin":
-                    mem = math.sin(math.radians(float(x[length + 1])))
-                    substr = "sin " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        sqrt = x.count("//")
-        for amount in range(sqrt):
-            for length in range(len(x)):
-                if x[length] == "//":
-                    mem = math.pow(float(x[length - 1]), 1 / float(x[length + 1]))
-                    substr = x[length - 1] + " // " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        sqr = x.count("^")
-        for amount in range(sqr):
-            for length in range(len(x)):
-                if x[length] == "^":
-                    mem = math.pow(float(x[length - 1]), float(x[length + 1]))
-                    substr = x[length - 1] + " ^ " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-        
-        div = x.count("/")
-        for amount in range(div):
-            for length in range(len(x)):
-                if x[length] == "/":
-                    mem = float(x[length - 1]) / float(x[length + 1])
-                    substr = x[length - 1] + " / " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
+    number_1 = float(input('Please enter the first number: '))
+    operation = input('''
+Please type in the math operation you would like to complete:
+===========================
++ for addition
+- for subtraction
+* for multiplication
+/ for division
+sqrt for squareroot
+degtorad for Degree to Radian Conversion
+radtodeg for Radian to Degree Conversion
+pi/ - Number 1 / pi
+pi* - Number 1 * pi
+fact - Factorial of a no1
+===========================
+Enter operator: ''')
+    if operation =='degtorad':
+        print('{} deg converted to ='.format(number_1),end='')
+        print(math.radians(number_1),'radians')
+    elif operation =='fact':
+        print("{}'s factorial is {}".format(number_1,math.factorial(number_1)))
 
-        mul = x.count("*")
-        for amount in range(mul):
-            for length in range(len(x)):
-                if x[length] == "*":
-                    mem = float(x[length - 1]) * float(x[length + 1])
-                    substr = x[length - 1] + " * " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
+    elif operation =='radtodeg':
+        print('{} rad converted to ='.format(number_1),end='')
+        print(math.degrees(number_1),'degrees')
+    elif operation =='sqrt':
+        print('{} square root = '.format(number_1), end='')
+        print(math.sqrt(number_1))
+    elif operation == 'pi/':
+            print('{} / pi = '.format(number_1), end='')
+            print(number_1 / math.pi)
+    elif operation == 'pi*':
+            print('{} * pi = '.format(number_1), end='')
+            print(number_1 * math.pi)
         
-        sub = x.count("-")
-        for amount in range(sub):
-            for length in range(len(x)):
-                if x[length] == "-":
-                    mem = float(x[length - 1]) - float(x[length + 1])
-                    substr = x[length - 1] + " - " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
+    elif operation != 'sqrt' or 'degtorad' or 'radtodeg' or 'pi/' or 'pi*':
+        number_2 = int(input('Please enter the second number: '))
+        if operation == '+':
+            print('{} + {} = '.format(number_1, number_2), end='')
+            print(number_1 + number_2)
+        elif operation == '-':
+            print('{} - {} = '.format(number_1, number_2), end='')
+            print(number_1 - number_2)
 
-        add = x.count("+")
-        for amount in range(add):
-            for length in range(len(x)):
-                if x[length] == "+":
-                    mem = float(x[length - 1]) + float(x[length + 1])
-                    substr = x[length - 1] + " + " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
+        elif operation == '*':
+            print('{} * {} = '.format(number_1, number_2), end='')
+            print(number_1 * number_2)
 
-        com = x.count("==")
-        for amount in range(com):
-            for length in range(len(x)):
-                if x[length] == "==":
-                    mem = (float(x[length - 1]) == float(x[length + 1]))
-                    substr = x[length - 1] + " == " + x[length + 1]
-                    res = eq.replace(substr, str(mem))
-                    eq = res
-            x = eq.split()
-            
-        return eq
-    except IndexError:
-        print("Error: Incorrect numin.")
-    except ValueError:
-        print("Error: Incorrect numbers.")
+        elif operation == '/':
+            print('{} / {} = '.format(number_1, number_2), end='')
+            print(number_1 / number_2)
 
-exit = 0
-while exit == 0:
-    numin = input("> ")
-    raw = ""
-    subStr = ""
 
-    if(str(numin).lower() == "exit".lower()):
-        exit = 1
-        break;
+    else:
+        print('You have not typed a valid operator, please run the program again.')
 
-    if(str(numin).lower() == "help".lower()): 
-        print("Num + Num2   -   Addition")
-        print("Num - Num2   -   Subtraction")
-        print("Num * Num2   -   Multiplication")
-        print("Num / Num2   -   Division")
-        print("Num ^ Num2   -   Square")
-        print("Num // Num2  -   Square root")
-        print("sin(Num)     -   Sine")
-        print("cos(Num)     -   Cosine")
-        print("tan(Num)     -   Tangent")
-        print("asin(Num)    -   Arcsine")
-        print("acos(Num)    -   Arccosine")
-        print("atan(Num)    -   Arctangent")
-        print("log(Num)     -   Logarithm")
-        print("deg(Num)     -   Degrees")
-        continue
-        
-    numin = numin.replace("sin(", "sin (")
-    numin = numin.replace("cos(", "cos (")
-    numin = numin.replace("tan(", "tan (")
-    numin = numin.replace("asin(", "asin (")
-    numin = numin.replace("acos(", "acos (")
-    numin = numin.replace("atan(", "atan (")
-    numin = numin.replace("log(", "log (")
-    numin = numin.replace("deg(", "deg (")
-    numin = numin.replace("Pi", "3.14159265358979323846264338327950288419716939937")
+    # Add again() function to calculate() function
+    again()
 
-    parenthesis = numin.count("(")
-    for a in range(parenthesis):
-        if not ((numin.rfind("(") - 1) < 0) and str(numin[numin.rfind("(") - 1]).isdigit():
-            substr = numin[(numin.rfind("(") + 1):numin.find(")")]
-            numin = numin.replace("(" + substr + ")", " * " + str(calc(substr)))
-        else:    
-            substr = numin[(numin.rfind("(") + 1):numin.find(")")]
-            numin = numin.replace("(" + substr + ")", str(calc(substr)))
-                
-    numin = calc(numin)
-    print("Answer: " + str(numin))
+def again():
+    calc_again = input('''
+Do you want to calculate again?
+Please type Y for YES or N for NO.
+ENTER HERE:  ''')
+
+    if calc_again.upper() == 'Y':
+        calculator()
+    elif calc_again.upper() == 'N':
+        print('See you later.')
+    else:
+        again()
+
+calculator()
