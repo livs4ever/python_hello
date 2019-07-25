@@ -13,7 +13,7 @@ if (CHOICE >= 1 and CHOICE <= 4):
     NUM1 = int(input())
     NUM2 = int(input())
     if CHOICE == 1:
-        RES = NUM1 + NUM2
+	RES = NUM1 + NUM2
 	print("Result = ", RES)
     elif CHOICE == 2:
 	RES = NUM1 - NUM2
